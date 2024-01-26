@@ -131,15 +131,15 @@ class Hacks:
                 return i
 import os
 os.system('cls')
-bits = 2048
+bits = 25
 r = Rsa(bits)
 
-encrypted = r.encrypt('h')
-print('Encrypted',encrypted)
+encrypted = r.encrypt('FBI are at my door')
+print('Encrypted',encrypted,'\n\n\n')
 
 
 h = Hacks()
-print(f'Brute forcing... estimated time={Decimal((Decimal(2**bits)/Decimal(1e7))/Decimal(3.154e+7))}')
+print(f'Brute forcing... estimated time={Decimal((Decimal(2**bits)/Decimal(1e7))/Decimal(3.154e+7))}\n')
 
 
 n, e = r.getPublicKey()
