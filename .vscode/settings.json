@@ -113,6 +113,8 @@
     "streambuf": "cpp",
     "typeinfo": "cpp",
     "variant": "cpp",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "set": "cpp",
+    "cinttypes": "cpp"
   }
 }

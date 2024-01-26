@@ -1,4 +1,5 @@
-import math,pygame,sys
+"""
+import math,pygame,sys,time
 
 
 class Trig:
@@ -51,11 +52,16 @@ class Trig:
         self.screen.fill(self.screen_color)
 
 
+"""
+#t = Trig(800,800)
+g
+from cryptography.fernet import Fernet
+f = Fernet(Fernet.generate_key())
+print(f.encrypt(b"Your mom"))
 
-t = Trig(800,800)
 
 
-while True:
+"""while True:
     for events in pygame.event.get():
         if events.type == pygame.QUIT:
             sys.exit(0)
@@ -69,4 +75,4 @@ while True:
     t.drawCos()
     t.drawTan()
     
-    pygame.display.update()
+    pygame.display.update()"""
