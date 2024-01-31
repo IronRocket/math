@@ -9,7 +9,8 @@ class Rsa:
         self.phi = None #Euler's totient
         self.e = 65537 #
         self.d = None
-        self._generateKey(bits)
+        self.bits = bits
+        self._generateKey()
 
     def history(self)->None:
         h = 'RSA is a public-key cryptosystem that is widely used in the world today to provide a secure transmission system to millions of communications, is one of the oldest such systems in existence. The acronym RSA comes from the surnames of Ron Rivest, Adi Shamir, and Leonard Adleman, who publicly described the algorithm in 1977. An equivalent system was developed secretly, in 1973 at GCHQ (the British signals intelligence agency), by the English mathematician Clifford Cocks. That system was declassified in 1997.'
@@ -55,9 +56,9 @@ class Rsa:
         else:
             return x % m
 
-    def _generateKey(self,bits):
-        self.p = self._randomPrime(bits)
-        while (prime := self._randomPrime(bits)) == self.p:
+    def _generateKey(self):
+        self.p = self._randomPrime(self.bits)
+        while (prime := self._randomPrime(self.bits)) == self.p:
             pass
         self.q = prime
         self.n = self.p*self.q
@@ -83,13 +84,16 @@ class Rsa:
         return decryptedText
 
 class Hacks:
-    def __init__(self) -> None:
+    def __init__(self,bits) -> None:
         self.p = None #prime number
         self.q = None #prime number
         self.n = None #modulus
         self.phi = None #Euler's totient
         self.e = 65537 #
         self.d = None
+        
+        self.bits = bits
+        self.estimated = (2**bits)/1.154e+7
 
     def encrypt(self,message:str)->tuple:
         array = []
@@ -134,17 +138,12 @@ os.system('cls')
 bits = 25
 r = Rsa(bits)
 
-encrypted = r.encrypt('FBI are at my door')
-print('Encrypted',encrypted,'\n\n\n')
+encrypted = r.encrypt('h')
 
-
-h = Hacks()
-print(f'Brute forcing... estimated time={Decimal((Decimal(2**bits)/Decimal(1e7))/Decimal(3.154e+7))}\n')
-
+h = Hacks(bits)
 
 n, e = r.getPublicKey()
 s = time.perf_counter()
 h.bruteForce(n)
-print(f'len(n)={len(str(math.log(n)))} seconds={time.perf_counter()-s}')
-
-print(h.decrypt(encrypted))
+e = time.perf_counter()-s
+print(f'encrypted={encrypted}\ndecrypted={h.decrypt(encrypted)}\nestimated={h.estimated}\nseconds={e}')
