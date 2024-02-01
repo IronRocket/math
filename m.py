@@ -1,4 +1,4 @@
-import math,pygame,sys,time,random,keyboard
+import math,pygame,sys,time,random
 
 pygame.init()
 font = pygame.font.SysFont('Comic Sans MS', 14)
@@ -182,16 +182,7 @@ while True:
         if events.type == pygame.QUIT:
             sys.exit(0)
 
-    if keyboard.is_pressed('e'):
-        e.majorAxis += 10
-        time.sleep(0.1)
-    elif keyboard.is_pressed('q'):
-        e.majorAxis -= 10
-        time.sleep(0.1)
-    elif keyboard.is_pressed('a'):
-        e.step -= 0.1
-    elif keyboard.is_pressed('d'):
-        e.step += 0.1
+    
 
 
     if t.x > engine.width:

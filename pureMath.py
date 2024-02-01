@@ -2,7 +2,7 @@ import math,time
 
 PI = 3.1415926535897932384626433832795028841971693993751
 
- 
+
 def timer_func(func): 
     def wrap_func(*args, **kwargs):
         timer = False
@@ -92,7 +92,10 @@ def myArcTan(x:float,accuracy:int=100)->float:
         numerator = (-1)**i
         denominator = 2*i+1
         approx += coef*(numerator/denominator)
-    return approx
+    return
+
+def arithmeticSeries(step,term):
+    return ((term/2)*(2*step+(term-1)*(step)))
 
 x= 0.5
 

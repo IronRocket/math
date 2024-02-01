@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include<windows.h>
+#ifdef __linux__
+
+#elif _WIN32
+    #include<windows.h>
+#endif
 #define M_PI 3.14159265358979323846
 
 
