@@ -2,11 +2,19 @@
 #include <fstream>
 #include <vector>
 #include <math.h>
-
+#include <algorithm>
+#include <string>
 typedef struct Person{
     int id;
 }Person;
 
+enum Color: std::string{
+    black,
+    blue,
+    red,
+    orange,
+    white,
+};
 
 class Queue{
     private:
@@ -47,7 +55,9 @@ class Queue{
         }
 
 };
-
+using namespace std;
 int main(){
-    
-}
+    Color s{red};
+    cout<<s;
+    return 0;
+}  

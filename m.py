@@ -1,4 +1,6 @@
-import math,pygame,sys,time,random
+import math,pygame,sys,time,random,keyboard
+
+PI = 3.1415926535897932384626433832795028841971693993751
 
 pygame.init()
 font = pygame.font.SysFont('Comic Sans MS', 14)
@@ -24,6 +26,7 @@ class Engine:
         self.fps = fps
         self.clock =pygame.time.Clock()
     def clear(self):
+        self.clock.tick(self.fps)
         self.screen.fill(self.background)
 
 class TrigFunctions():
@@ -165,7 +168,30 @@ class Ellipse:
                 if point != None:
                     pygame.draw.circle(self.screen,s.pointColor,(point.x,point.y),1)
 
+class Snapshot:
+    def __init__(self,radius,rotations,duration,engine:Engine):
+        self.radius = radius
+        self.rotations = rotations
+        self.duration = duration*engine.fps
+        self.r = pygame.Rect(engine.width/2,engine.height/2,10,10)
+        self.angle = 0
+        self.previous = time.perf_counter()
+    def radians(self)->float:
+        return (self.rotations*2*PI)/self.duration
 
+    def linearSpeed(self) ->float:
+        c = 2*PI*self.radius
+        return (c*self.rotations)/self.duration
+    
+    def animate(self):
+        pygame.draw.rect(engine.screen, (0,0,0), (0, 0, self.r.width, self.r.height), 2)
+        self.angle += self.radians()*(180/PI)
+        if self.angle > 360:
+            self.angle = 0
+        rotated_surface = pygame.transform.rotate(engine.screen, self.angle)
+        rotated_rect = rotated_surface.get_rect(center=self.r.center)
+        engine.screen.blit(rotated_surface, rotated_rect)
+    
 engine = Engine(800,800)
 t = TrigFunctions(engine.screen)
 e =Ellipse(
@@ -176,18 +202,22 @@ e =Ellipse(
     step=0.5
 )
 
+y = Snapshot(10,1,60,engine)
+
 while True:
 
     for events in pygame.event.get():
         if events.type == pygame.QUIT:
             sys.exit(0)
 
-    
-
-
+    if keyboard.is_pressed('q') and y.rotations > 1:
+        y.rotations -= 1
+    if keyboard.is_pressed('e'):
+        y.rotations += 1
     if t.x > engine.width:
         t.restartXPosition()
     engine.clear()
+    y.animate()
     t.renderSin()
     t.renderTan()
     e.render()

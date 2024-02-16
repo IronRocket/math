@@ -97,6 +97,3 @@ def myArcTan(x:float,accuracy:int=100)->float:
 def arithmeticSeries(step,term):
     return ((term/2)*(2*step+(term-1)*(step)))
 
-x= 0.5
-
-print(math.sin(x),mySin(x))

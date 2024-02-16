@@ -11,7 +11,7 @@
 
 unsigned int factorial(unsigned int n)
 {
-    int result = 1, i;
+    unsigned int result = 1, i;
 
     for (i = 2; i <= n; i++) {
         result *= i;
