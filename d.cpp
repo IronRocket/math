@@ -8,7 +8,7 @@ typedef struct Person{
     int id;
 }Person;
 
-enum Color: std::string{
+enum Color{
     black,
     blue,
     red,

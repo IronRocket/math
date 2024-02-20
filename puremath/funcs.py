@@ -1,6 +1,4 @@
-import math,time
-
-PI = 3.1415926535897932384626433832795028841971693993751
+import time
 
 
 def timer_func(func): 
@@ -94,6 +92,7 @@ def myArcTan(x:float,accuracy:int=100)->float:
         approx += coef*(numerator/denominator)
     return
 
-def arithmeticSeries(step,term):
-    return ((term/2)*(2*step+(term-1)*(step)))
-
+def harmonicSeries(start:int,stop:int):
+    total = 0
+    for i in range(start,stop):total+=1/i
+    return total

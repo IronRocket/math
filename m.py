@@ -33,6 +33,7 @@ class TrigFunctions():
     def __init__(self,screen:pygame.Surface,scale:int=10) -> None:
         self.screen = screen
         self.scale = scale
+        self.area = 0
         self.x =0
         self.radians =0
         self.sin =[]
@@ -61,12 +62,38 @@ class TrigFunctions():
         for point in self.tan:
             point = (point[0],point[1]+self.yOffset)
             pygame.draw.line(self.screen, self.line_color, point, point, self.lineSize)
+   
+    def reamannSum(self,accuracy=10):
+        temp = 0
+        for i in range(0,len(self.sin),accuracy):
+            if self.sin[i][1] < 0:
+               pygame.draw.rect(
+                    self.screen, self.line_color, 
+                    pygame.Rect(self.sin[i][0],self.sin[i][1]+self.yOffset,accuracy,-self.sin[i][1]),
+                    width=2
+                )
+            else: 
+                pygame.draw.rect(
+                    self.screen, self.line_color, 
+                    pygame.Rect(self.sin[i][0],self.yOffset,accuracy,self.sin[i][1]),
+                    width=2
+                )
+            temp += accuracy*abs(self.sin[i][1])
+            text = font.render(f'Area:{self.area}',True, (255,255,255))
+            self.screen.blit(text,(self.screen.get_width()/1.5,self.screen.get_height()/1.5)
+            )
+        self.area =temp
+
 
     def restartXPosition(self):
-        self.x =0
-        self.sin =[]
-        self.cos =[]
-        self.tan =[]
+        if self.x > self.screen.get_width():
+            self.x = 0
+            self.area = 0
+            self.sin =[]
+            self.cos =[]
+            self.tan =[]
+        self.x += 1
+        self.radians = convertToRadians(self.x)
 
 
 class Ellipse:
@@ -193,7 +220,7 @@ class Snapshot:
         engine.screen.blit(rotated_surface, rotated_rect)
     
 engine = Engine(800,800)
-t = TrigFunctions(engine.screen)
+t = TrigFunctions(engine.screen,50)
 e =Ellipse(
     engine.screen,minorAxis=50,majorAxis=100,
     angleRange=(0,360),offset=Vector(300,300),
@@ -214,12 +241,13 @@ while True:
         y.rotations -= 1
     if keyboard.is_pressed('e'):
         y.rotations += 1
-    if t.x > engine.width:
-        t.restartXPosition()
+
+    t.restartXPosition()
     engine.clear()
-    y.animate()
     t.renderSin()
-    t.renderTan()
+    t.reamannSum()
+
+
     e.render()
     e.details()
 
